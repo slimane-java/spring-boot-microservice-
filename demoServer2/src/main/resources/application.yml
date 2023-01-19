@@ -1,0 +1,53 @@
+
+spring:
+  main:
+    allow-circular-references: true
+  security:
+    user:
+      name: user
+      password: user
+  datasource:
+    url: jdbc:mysql://localhost:3306/app3
+    username:  root
+    password:  root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000
+      cache-null-values: true
+
+  application:
+    name: material-server
+
+server:
+  port: 8082
+  servlet:
+    context-path: /api-demo-service-support
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+resilience4j:
+  ratelimiter:
+    instances:
+      allRateLimiter:
+        limit-for-period: 2
+        limit-refresh-period: 5
+        timeout-duration: 0
+logging:
+  file:
+    name: C:\ELK_Stack\elktest.log

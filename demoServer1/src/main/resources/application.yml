@@ -1,0 +1,55 @@
+
+spring:
+  main:
+    allow-circular-references: true
+  security:
+    user:
+      name: user
+      password: user
+  datasource:
+    url: jdbc:mysql://localhost:3306/app1
+    username:  root
+    password:  root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+    hibernate:
+      ddl-auto: update
+  application:
+    name: invoice-server
+
+server:
+  port: 8089
+  servlet:
+    context-path: /api-invoice
+
+eureka:
+  instance:
+    hostname: invoice-server
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+
+resilience4j:
+  retry:
+    instances:
+      getAllClient:
+        max-attempts: 5
+        wait-duration: 2s
+        retry-exceptions: org.springframework.web.client.ResourceAccessException
+
+  rate-limiter:
+    instances:
+      allTest:
+        limit-for-period: 2
+        limit-refresh-period: 5s
+        timeout-duration: 0
+
+
+

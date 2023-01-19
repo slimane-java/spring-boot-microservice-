@@ -1,0 +1,41 @@
+server:
+  port: 8060
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      loadbalancer:
+        use404: true
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: demo-service
+          uri: lb://invoice
+          predicates:
+            - Path=/api-invoice/**
+        - id: project-test
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/api-projectTest/**
+        - id: demo-service-support
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/api-demo-service-support/**
+        - id: eureka
+          uri: http://localhost:8761/
+          predicates:
+            - Path=/eur/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    hostname: localhost
+
+
+
