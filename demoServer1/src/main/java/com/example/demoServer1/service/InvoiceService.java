@@ -1,6 +1,7 @@
 package com.example.demoServer1.service;
 
 import com.example.demoServer1.dto.InvoiceDtoGet;
+import com.example.demoServer1.dto.MaterialGetDto;
 import com.example.demoServer1.entity.Invoice;
 import com.example.demoServer1.entityTarget.ClientGetDto;
 
@@ -12,7 +13,7 @@ public interface InvoiceService {
     void delete(Long id);
     Invoice update(Long id, Invoice invoice);
     Optional<Invoice> findById(Long id);
-    List<ClientGetDto> getAllClient();
+    List<MaterialGetDto> getAllMaterial();
     List<ClientGetDto> getAllClientRestTemplate();
     List<Invoice> getAll();
 }

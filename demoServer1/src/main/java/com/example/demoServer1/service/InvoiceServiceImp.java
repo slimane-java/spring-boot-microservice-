@@ -3,6 +3,7 @@ package com.example.demoServer1.service;
 //import com.example.demoServer1.dao.InvoiceRepository;
 import com.example.demoServer1.dao.InvoiceRepository;
 import com.example.demoServer1.dto.InvoiceDtoGet;
+import com.example.demoServer1.dto.MaterialGetDto;
 import com.example.demoServer1.entity.Invoice;
 import com.example.demoServer1.entityTarget.ClientGetDto;
 import com.example.demoServer1.enums.ExceptionMessage;
@@ -87,8 +88,8 @@ public class InvoiceServiceImp implements InvoiceService{
     }
 
     @Override
-    public List<ClientGetDto> getAllClient() {
-        return clientService.getAllClientTest();
+    public List<MaterialGetDto> getAllMaterial() {
+        return clientService.getAllMaterial();
     }
 
     public List<ClientGetDto> getAllClientRestTemplate() {

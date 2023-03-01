@@ -2,11 +2,7 @@ package com.example.demoServer2.api;
 
 import com.example.demoServer2.dto.MaterialPostDto;
 import com.example.demoServer2.dto.MaterialGetDto;
-import com.example.demoServer2.dto.UserDto;
 import com.example.demoServer2.service.MaterialService;
-import com.example.demoServer2.service.MaterialServiceDelegated;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

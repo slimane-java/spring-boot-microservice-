@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Array;
@@ -38,23 +39,28 @@ public class ApiController {
     private final InvoiceMapper invoiceMapper;
 
     private final WebClient.Builder webClient;
+    private final RestTemplate restTemplate;
 
 
     @GetMapping("/getAllMaterial")
-    public ResponseEntity<List<MaterialGetDto>> getAllMaterial(){
-        MaterialGetDto[] materialGetDtos = webClient.build()
-                .get()
-                .uri("http://material-server/api-demo-service-support/materials/all")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(MaterialGetDto[].class)
-                .block()
-                ;
-        List<MaterialGetDto> list = Arrays.stream(materialGetDtos).collect(Collectors.toList());
+    public ResponseEntity<List<Object>> getAllMaterial(){
+//        MaterialGetDto[] materialGetDtos = webClient.build()
+//                .get()
+//                .uri("http://localhost:8060/api-demo-service-support/materials/all")
+//                .accept(MediaType.APPLICATION_JSON)
+//                .retrieve()
+//                .bodyToMono(MaterialGetDto[].class)
+//                .block()
+//                ;
 
-        return ResponseEntity.ok(list);
+//        ResponseEntity<MaterialGetDto[]> list = restTemplate.getForEntity("http://material-server/api-demo-service-support/materials/all", MaterialGetDto[].class);
+        Object[] list = restTemplate.getForObject("http://localhost:8060/api-demo-service-support/materials/all", Object[].class);
+
+        List<Object> result = Arrays.asList(list);
+        return ResponseEntity.ok(result);
 
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<InvoiceDtoGet>> getAllInvoicesApi(){
         return ResponseEntity.ok(invoiceMapper.all(invoiceService.getAll()));
@@ -66,11 +72,11 @@ public class ApiController {
         return ResponseEntity.ok("ok");
     }
 
-    @GetMapping("/getAllClient")
-    @Retry(name = "getAllClient", fallbackMethod = "getInvoiceFallback")
-    public ResponseEntity<List<ClientGetDto>> getAllClientApi(){
+    @GetMapping("/allMaterial")
+//    @Retry(name = "getAllClient", fallbackMethod = "getInvoiceFallback")
+    public ResponseEntity<List<MaterialGetDto>> getAllClientApi(){
 
-        return ResponseEntity.ok(invoiceService.getAllClient());
+        return ResponseEntity.ok(invoiceService.getAllMaterial());
     }
 
     @GetMapping("/getAllClientRestTemplate")

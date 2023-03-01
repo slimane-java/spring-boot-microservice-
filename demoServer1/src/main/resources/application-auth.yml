@@ -1,5 +1,5 @@
-auth:
-  clients:
-    browser:
-      client-secret: secret
-      scopes: api
+#auth:
+#  clients:
+#    browser:
+#      client-secret: secret
+#      scopes: api
