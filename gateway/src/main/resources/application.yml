@@ -24,6 +24,10 @@ spring:
           uri: lb://material-server/
           predicates:
             - Path=/api-demo-service-support/**
+        - id: graphql-server
+          uri: lb://graphql-server/
+          predicates:
+            - Path=/api-graphql-server/**
 
 eureka:
   client:

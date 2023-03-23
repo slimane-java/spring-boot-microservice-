@@ -1,15 +1,15 @@
 package com.example.demoServer1.api;
 
-import com.example.demoServer1.dto.InvoiceDtoGet;
-import com.example.demoServer1.dto.InvoiceDtoPost;
-import com.example.demoServer1.dto.MaterialGetDto;
+import com.example.demoServer1.dto.*;
 import com.example.demoServer1.entity.Invoice;
 import com.example.demoServer1.entityTarget.ClientGetDto;
 import com.example.demoServer1.enums.ExceptionMessage;
 import com.example.demoServer1.exception.InvoiceAlreadyExists;
 import com.example.demoServer1.exception.InvoiceNotFound;
 import com.example.demoServer1.mapper.InvoiceMapper;
+import com.example.demoServer1.service.GraphqlService;
 import com.example.demoServer1.service.InvoiceService;
+import com.google.gson.Gson;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -41,7 +41,23 @@ public class ApiController {
     private final WebClient.Builder webClient;
     private final RestTemplate restTemplate;
 
+    private final GraphqlService graphqlService;
 
+    private  Gson gson = new Gson();
+
+    @PostMapping("/getAllGraphql")
+    public ResponseEntity<String> getAllGraphql(@RequestBody Query query){
+        System.out.println("Query Query " + query.getQuery());
+        return ResponseEntity.ok(graphqlService.allCustomer(query));
+    }
+    @PostMapping("/createCustomer")
+    public ResponseEntity<Object> createCustomer(@RequestBody Query query){
+
+
+        System.out.println("query query" + query.getQuery());
+        return ResponseEntity.ok(graphqlService.createCustomer(query));
+
+    }
     @GetMapping("/getAllMaterial")
     public ResponseEntity<List<Object>> getAllMaterial(){
 //        MaterialGetDto[] materialGetDtos = webClient.build()
